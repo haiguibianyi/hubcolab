@@ -1,0 +1,56 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "gpuType": "T4",
+      "authorship_tag": "ABX9TyNwqZRxFEk97sdusxYdS6qj",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    },
+    "accelerator": "GPU"
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/haiguibianyi/hubcolab/blob/main/px0%E8%B7%91%E8%B0%B1\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "rne9mDFcpHRq"
+      },
+      "outputs": [],
+      "source": [
+        "%cd /content/\n",
+        "!rm -rf lc0\n",
+        "!git clone --depth 1 --recurse-submodules https://github.com/official-pikafish/lc0\n",
+        "!apt-get install ninja-build\n",
+        "!pip3 install meson==0.55.3\n",
+        "%cd lc0\n",
+        "!rm -rf build\n",
+        "!meson build --buildtype release -Db_lto=true -Dgtest=false -Dblas=false -Dopencl=false -Dcudnn=false -Dcuda=true -Donnx_libdir=\"\" -Donnx_include=\"\" -Dmalloc=\"\"\n",
+        "%cd build\n",
+        "!ninja\n",
+        "!wget https://github.com/official-pikafish/pxzero-networks/releases/download/px0_client/px0_client.7z\n",
+        "!7z x px0_client.7z && rm px0_client.7z\n",
+        "!chmod 777 *\n",
+        "!./lc0_main --user=用户名 --password=密码 --train-only=false"
+      ]
+    }
+  ]
+}
